@@ -6,6 +6,8 @@ const http = require("http");
 const app = express();
 const server = http.createServer();
 
+app.set('views', './views');
+app.set('view engine', 'pug');
 
 server.on('request', (request, response) => {
   console.log('Url:', request.url)
@@ -19,17 +21,17 @@ server.on('request', (request, response) => {
 app.use('/static', express.static('extra'));
 
 app.get('/', (request, response) => {
-  response.sendFile(path.join(__dirname, '/sitewelcome.html'))
+  response.sendFile(path.join(__dirname, '/extra/sitewelcome.html'))
 });
 
 app.get('/about', (request, response) => {
-  response.sendFile(path.join(__dirname, "/siteabout.html"))
+  response.sendFile(path.join(__dirname, "/extra/siteabout.html"))
 });
 
 
 app.get('/pokemonsearch', (request, response) => {
 
-  response.sendFile(path.join(__dirname, "/siteHS.html"))
+  response.sendFile(path.join(__dirname, "extra/siteHS.html"))
 
 });
 
@@ -45,12 +47,9 @@ app.get('/pokemonsearch_start', (request, response) => {
     .header("X-RapidAPI-Host", "pokemon-go1.p.rapidapi.com")
     .header("X-RapidAPI-Key", "0569c82951mshc69f73186e5e0b3p1adc51jsnf1fc34fffc7a")
     .end(function (result) {
-      var pokearray = [];
+      var pokemanss =  " ";
       //border length 
       anz = 0;
-
-
-
 
         for (var i = 0; result.body.length; i++) {
           let pokemon = result.body[i];
@@ -59,7 +58,7 @@ app.get('/pokemonsearch_start', (request, response) => {
 
           try {
             if (pokemon["pokemon_name"] === request.query.pokemon) {
-              pokearray.push(pokemon);
+             pokemanss = pokemanss + " " + JSON.stringify(pokemon);
             }
           }
           catch (Error) {
@@ -76,8 +75,10 @@ app.get('/pokemonsearch_start', (request, response) => {
             break;
           }
         }
-      
-        response.send(pokearray);
+        
+        
+        response.render('ausgabe', { title: 'Hey', message: JSON.stringify(pokemanss)});
+        
       });
 
 
