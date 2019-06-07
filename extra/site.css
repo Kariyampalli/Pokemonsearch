@@ -44,7 +44,43 @@ border-left: 60px solid rgb(192, 43, 17);
 border-right: 60px solid rgb(192, 43, 17);
 }
 
-p:not(.title){
+p:not(.title):not(.creator):not(.specialbox1){
     text-align: center;
     font-size: 40px;
+    margin-top: 300px;
+    position: absolute;
+    color: white;
+    margin-left: 840px;
 }
+
+  
+  .creator{
+    text-align: center;
+    font-size: 40px;
+    margin-top: 150px;
+    position: absolute;
+    color: white;
+    margin-left: 1050px;
+    font-size: 80px;
+  }
+
+  .specialbox1{
+    text-align: center;
+    font-size: 40px;
+    margin-top: 450px;
+    position: absolute;
+    border-style: dashed;
+    border-color: #111;
+    border-width: 10px;
+    background-color: rgb(245, 239, 239);
+    color: black;
+    margin-left: 25%;
+    margin-right: 25%;
+    font-size: 40px;
+  }  
+
+  img{
+    width:600px;
+    height:600px;
+    position: absolute;
+  }

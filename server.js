@@ -18,40 +18,61 @@ app.get('/about', (request, response) => {
 
 
 app.get('/pokemonsearch', (request, response) => {
+  
   response.sendFile(path.join(__dirname, "/siteHS.html"))
 
 });
 
 
-var pokearray = [];
+
+
 app.get('/pokemonsearch_start', (request, response) => {
-  
+
+
+
 
   unirest.get("https://pokemon-go1.p.rapidapi.com/pokemon_stats.json")
     .header("X-RapidAPI-Host", "pokemon-go1.p.rapidapi.com")
     .header("X-RapidAPI-Key", "0569c82951mshc69f73186e5e0b3p1adc51jsnf1fc34fffc7a")
     .end(function (result) {
+      var pokearray=[];
+     //border length 
+     anz=0;
 
 
-     //border length
-      for (var i = 0; result.body.length; i++) {
-        let pokemon = result.body[i];
 
-        for (var key in pokemon) {
+     
+     for (var i = 0; result.body.length; i++) {
+      let pokemon = result.body[i];
 
-          if (key === 'pokemon_name') {
-            if (pokemon[key] === request.query.pokemon) 
-            {
-             pokearray.push(pokemon);
-            
-              break;
-            }
+      
+
+        try{
+          if (pokemon["pokemon_name"] === request.query.pokemon) 
+          {
+           pokearray.push(pokemon);
           }
-         
-        }     
-      }
-    });
-    console.log(pokearray)//LEER????
+        }
+        catch(Error){
+
+        }
+        
+        
+        
+    
+    anz++;
+    
+    console.log(anz);
+    if(anz === 550)
+    {
+      break;
+    }
+    }
+    
+    response.send(pokearray);
+  });
+     
+
 });
 
 /*
