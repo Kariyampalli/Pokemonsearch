@@ -1,9 +1,19 @@
 const express = require('express');
 const path = require("path");
 var unirest = require('unirest');
-
+const http = require("http");
 
 const app = express();
+const server = http.createServer();
+
+
+server.on('request', (request, response) => {
+  console.log('Url:', request.url)
+  console.log('Method:', request.method)
+
+  httpUtils.handleStaticRequest(request, response)
+})
+
 
 
 app.use('/static', express.static('extra'));
@@ -18,7 +28,7 @@ app.get('/about', (request, response) => {
 
 
 app.get('/pokemonsearch', (request, response) => {
-  
+
   response.sendFile(path.join(__dirname, "/siteHS.html"))
 
 });
@@ -35,83 +45,47 @@ app.get('/pokemonsearch_start', (request, response) => {
     .header("X-RapidAPI-Host", "pokemon-go1.p.rapidapi.com")
     .header("X-RapidAPI-Key", "0569c82951mshc69f73186e5e0b3p1adc51jsnf1fc34fffc7a")
     .end(function (result) {
-      var pokearray=[];
-     //border length 
-     anz=0;
+      var pokearray = [];
+      //border length 
+      anz = 0;
 
 
 
-     
-     for (var i = 0; result.body.length; i++) {
-      let pokemon = result.body[i];
 
-      
+        for (var i = 0; result.body.length; i++) {
+          let pokemon = result.body[i];
 
-        try{
-          if (pokemon["pokemon_name"] === request.query.pokemon) 
-          {
-           pokearray.push(pokemon);
+
+
+          try {
+            if (pokemon["pokemon_name"] === request.query.pokemon) {
+              pokearray.push(pokemon);
+            }
+          }
+          catch (Error) {
+
+          }
+
+
+
+
+          anz++;
+
+          console.log(anz);
+          if (anz === 550) {
+            break;
           }
         }
-        catch(Error){
+      
+        response.send(pokearray);
+      });
 
-        }
-        
-        
-        
-    
-    anz++;
-    
-    console.log(anz);
-    if(anz === 550)
-    {
-      break;
-    }
-    }
-    
-    response.send(pokearray);
-  });
-     
-
-});
-
-/*
-unirest.get("https://pokemon-go1.p.rapidapi.com/pokemon_stats.json")
-.header("X-RapidAPI-Host", "pokemon-go1.p.rapidapi.com")
-.header("X-RapidAPI-Key", "0569c82951mshc69f73186e5e0b3p1adc51jsnf1fc34fffc7a")
-.end(function (result) {
-
-
-
-
-  for (var i = 0; result.body.length; i++) {
-    let pokemon = result.body[i];
-
-    for (var key in pokemon) {
-      if (key === 'pokemon_name')
-        if (pokemon[key] === "Arceus")
-          response.send(pokemon[key]);
-
-
-    }
-  }
-//Send außerhalb der Schleife als einen Array
-// Man kann nicht sendFile und response.send gleichzeitig machen
 
 });
 
 
 
 
-/*
-app.get('/v1', (resquest, response)=>{
-
-console.log(request.query);
-
-});
-*/
-
-//http://localhost:3000/pokemonsearch?search={POKEMON}&search={ID}&search={Form}
 
 
 
@@ -145,64 +119,9 @@ app.listen(3000, () => console.log("listening on port 3000"));
 
 
 /*
+----------------NICHT WICHTIG FÜR DIE ABGABE---------------
 
-
-var giveback = " ";
-app.get('/pokemonsearch_start', (request, response) => {
-  console.log(request.query.pokemon);
-
-
-  unirest.get("https://pokemon-go1.p.rapidapi.com/pokemon_stats.json")
-    .header("X-RapidAPI-Host", "pokemon-go1.p.rapidapi.com")
-    .header("X-RapidAPI-Key", "0569c82951mshc69f73186e5e0b3p1adc51jsnf1fc34fffc7a")
-    .end(function (result) {
-
-
-
-      
-      for (var i = 0; result.body.length; i++) {
-        let pokemon = result.body[i];
-
-        for (var key in pokemon) {
-
-
-          if (request.query.pokemon_id == null && request.query.pokemon == null) {
-            if (key === "pokemon_id") {
-              if (pokemon[key] === request.query.pokemon_id) {
-                giveback = JSON.stringify(pokemon) + "\n";
-                break;
-              }
-            }
-          }
-
-
-
-          if (key === 'pokemon_name') {
-            if (pokemon[key] === request.query.pokemon) {
-              giveback = JSON.stringify(pokemon) + "\n";
-              break;
-            }
-          }
-
-          if (key === "pokemon_id") {
-            if (pokemon[key] === request.query.pokemon_id) {
-              giveback = JSON.stringify(pokemon) + "\n";
-              break;
-            }
-          }
-
-          if (key === "pokemon_id") {
-            if (pokemon[key] === request.query.pokemon_id) {
-              giveback = JSON.stringify(pokemon) + "\n";
-              break;
-            }
-          }
-
-        }
-      }
-    });
-  response.sendFile(path.join(__dirname, "/siteHS.html"))
-
-});
-console.log(giveback);
+<input class = "input2" type="text" placeholder="ID" name="pokemon_id">
+     
+<input class = "input3" type="text" placeholder="Form" name="pokemon_form">
 */
