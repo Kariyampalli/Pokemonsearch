@@ -70,7 +70,7 @@ app.get('/pokemonsearch_start', (request, response) => {
 
           anz++;
 
-          console.log(anz);
+       
           if (anz === 550) {
             break;
           }
