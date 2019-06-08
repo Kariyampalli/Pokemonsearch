@@ -60,7 +60,7 @@ console.log(newstring2);
 
 var newstring3= JSON.stringify(newstring2.split("\\quot;"));
 
-console.log(newstring3);
+console.log(JSON.parse(newstring3));
   //var array  = newstring3.split("\\quot");
 
 
