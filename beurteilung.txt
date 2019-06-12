@@ -1,0 +1,26 @@
+Feedback:
+Sehr schöne UI! (aber bitte passt auf Rechtschreibfehler auf! Sowas wirkt sofort total unprofessionell!!! In dem About-Text sind mindestens ein Dutzend Rechtschreib- und Grammatikfehler.)
+
+Die Art wie ihr eure statischen Files verwaltet (mit einzelnen Routen) ist nicht unbedingt die Art wie man das in Express macht.
+Ihr habt ja bereits folgendes definiert:
+app.use('/static', express.static('extra'));
+
+Damit könnt ihr auf alle files in diesem folder mit /static/xxx (wobei xxx für das jeweilige File steht) zugreifen.
+
+Gut ist, dass ihr Beispielnamen für Pokemons in eure Dokumentation gepackt habt, da ich keine Ahnung habe wie die Dinger heißen.
+
+Nicht so gut ist die Ausgabe des gefundenen Pokemons. Kein User will json Code sehen. Da hättet ihr besser eine echte HTML Ausgabe gemacht.
+
+HTML & CSS war nicht Sinn und Zweck von NVS in diesem Semester. Ich rechne es euch trotzdem an, dass ihr euch da eingearbeitet habt,
+aber lieber wäre mir gewesen ihr hättet euch auf NodeJS konzentriert (und z.B. eine MongoDB o.ä. eingebunden).
+
+Der "Go" Button auf der Such-Seite funktioniert bei mir nicht. Ich muss <Enter> drücken, damit der Request abgesetzt wird.
+
+Was genau ihr im NodeJS client macht verstehe ich nicht, aber ihr habt euch bemüht da irgendetwas zu extrahieren und aufzubereiten und es zeigt
+mir zumindest, dass ihr in Ansätzen versteht wie man JavaScript programmiert.
+
+Hättet ihr ein paar mehr Routen (vielleicht eine Post-Methode) oder unterschiedliche content-types, etwas mehr Funktionalität, ... würde ich euch gerne ein 'Gut (2)' geben.
+
+Die Anbindung einer Datenbank (MongoDB) wäre natürlich überhaupt der Bringer gewesen.
+
+Beurteilung: Befriedigend (3+)
